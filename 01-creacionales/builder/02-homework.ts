@@ -33,7 +33,7 @@ class Query{
     showSelect(){
         const fields = this.fields.length > 0 ? this.fields.join(', ') : '*';
         const where = this.condition.length > 0 ? `Where ${this.condition.join(' AND ')}` : ' ';
-        const order = this.orderBy.length > 0 ? `Order By ${this.orderBy.join(', ')}` : ' ';
+        const order = this.orderBy.length > 0 ? `${this.orderBy.join(', ')}` : ' ';
         const limit = this.limit ? `LIMIT ${this.limit}` : '';
         console.log(`Query:
         SELECT ${fields} From ${this.table} ${where} ${order} ${limit}
@@ -64,7 +64,7 @@ class QueryBuilder{
     }
 
     setOrderBy(order: string, direction: 'ASC' | 'DESC' = 'ASC'){
-        this.query.orderBy.push(`${order} ${direction}`);
+        this.query.orderBy.push(`order by ${order} ${direction}`);
         return this;
     }
 
@@ -85,6 +85,7 @@ function main(){
     .setWhere(`name like '%Rica%'`)
     .setWhere('age > 18')
     .setOrderBy('lastname', 'DESC')
+    .setOrderBy('name', 'ASC')
     .setLimit(10)
     .execute();
 
